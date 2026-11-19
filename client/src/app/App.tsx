@@ -1,0 +1,55 @@
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Spinner } from '../components/ui/Button';
+import { AuthPage } from '../features/auth/AuthPage';
+import { BudgetsPage } from '../features/budgets/BudgetsPage';
+import { OverviewPage } from '../features/overview/OverviewPage';
+import { SettingsPage } from '../features/settings/SettingsPage';
+import { TransactionEditorProvider } from '../features/transactions/TransactionEditor';
+import { TransactionsPage } from '../features/transactions/TransactionsPage';
+import { useMe } from '../lib/queries';
+import { AppShell } from './AppShell';
+
+function RequireAuth({ children }: { children: React.ReactNode }) {
+  const { data: me, isLoading, error, refetch } = useMe();
+  const location = useLocation();
+  if (isLoading) {
+    return (
+      <div className="grid min-h-screen place-items-center text-ink-muted">
+        <Spinner className="h-6 w-6" />
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="grid min-h-screen place-items-center px-6 text-center">
+        <div>
+          <p className="font-semibold">Can’t reach the Ledgerline server.</p>
+          <p className="mt-1 text-sm text-ink-muted">{error.message}</p>
+          <button type="button" onClick={() => refetch()} className="mt-4 font-semibold underline">Try again</button>
+        </div>
+      </div>
+    );
+  }
+  if (!me) return <Navigate to="/login" replace state={{ from: location.pathname + location.search }} />;
+  return (
+    <TransactionEditorProvider>
+      <AppShell>{children}</AppShell>
+    </TransactionEditorProvider>
+  );
+}
+
+const page = (el: React.ReactNode) => <RequireAuth>{el}</RequireAuth>;
+
+export function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<AuthPage mode="login" />} />
+      <Route path="/register" element={<AuthPage mode="register" />} />
+      <Route path="/" element={page(<OverviewPage />)} />
+      <Route path="/transactions" element={page(<TransactionsPage />)} />
+      <Route path="/budgets" element={page(<BudgetsPage />)} />
+      <Route path="/settings" element={page(<SettingsPage />)} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
