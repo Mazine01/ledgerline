@@ -19,7 +19,8 @@ Built for the **Auspify Technologies Full Stack Development Internship, Task 3 (
 - **Budgets.** Monthly limits per category, with meters that turn amber at 80% and red when over. You can copy last month's budgets.
 - **Transactions.** Grouped by day, filterable by month, type and category, searchable by note, and exportable to CSV.
 - **Settings.** Change your name and display currency (USD, EUR, MAD, VND, CNY, GBP), and create, rename, recolor or delete categories.
-- **Works everywhere.** Responsive with a bottom nav and thumb-reach add button on phones, dark mode, keyboard accessible, and a screen-reader table behind each chart.
+- **Light and dark mode.** Pick Light, Dark or Auto (follows your device) in Settings, or flip it from the sidebar. The choice is remembered with no flash on load.
+- **Works everywhere.** Responsive with a bottom nav and thumb-reach add button on phones, keyboard accessible, and a screen-reader table behind each chart.
 
 | | |
 | --- | --- |

@@ -2,7 +2,6 @@ import type { Currency } from '@ledgerline/shared';
 
 const formatters = new Map<string, Intl.NumberFormat>();
 
-/** 123456 cents → "$1,234.56" in the person's currency. `compact` drops the decimals for axis labels. */
 export function money(cents: number, currency: Currency, opts: { compact?: boolean; signed?: boolean } = {}) {
   const key = `${currency}-${opts.compact ? 'c' : 'f'}`;
   let f = formatters.get(key);
@@ -19,7 +18,6 @@ export function money(cents: number, currency: Currency, opts: { compact?: boole
   return cents > 0 ? `+${s}` : `−${s}`;
 }
 
-/** cents → "12.50" for an input field */
 export const centsToInput = (cents: number) => (cents / 100).toFixed(2);
 
 export const thisMonth = () => new Date().toISOString().slice(0, 7);

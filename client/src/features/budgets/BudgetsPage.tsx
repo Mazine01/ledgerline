@@ -18,7 +18,6 @@ export function BudgetsPage() {
   const save = useSaveBudgets();
   const toast = useToast();
 
-  // Draft limits as typed, keyed by category; saved together.
   const [draft, setDraft] = useState<Record<number, string>>({});
   const [errors, setErrors] = useState<Record<number, string>>({});
   useEffect(() => {

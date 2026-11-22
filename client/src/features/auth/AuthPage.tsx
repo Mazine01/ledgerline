@@ -7,6 +7,7 @@ import { SelectField, TextField } from '../../components/ui/Field';
 import { ApiError } from '../../lib/api';
 import { useLogin, useMe, useRegister } from '../../lib/queries';
 import { Logo } from '../../app/Logo';
+import { SiteFooter } from '../../components/SiteFooter';
 
 export function AuthPage({ mode }: { mode: 'login' | 'register' }) {
   const { data: me } = useMe();
@@ -20,6 +21,7 @@ export function AuthPage({ mode }: { mode: 'login' | 'register' }) {
         <div className="mx-auto w-full max-w-sm">
           <Logo />
           {mode === 'login' ? <LoginForm from={from} /> : <RegisterForm />}
+          <SiteFooter compact className="mt-12" />
         </div>
       </main>
       <StatementPreview />
@@ -109,7 +111,6 @@ function RegisterForm() {
   );
 }
 
-/** A month of money as the app draws it: what the product does, before signing in. */
 function StatementPreview() {
   const days = [3, 0, 5, 2, 0, 8, 1, 4, 0, 0, 6, 2, 3, 0, 1, 7, 0, 2, 5, 0, 1, 3, 0, 9, 0, 2, 4, 1, 0, 3];
   return (

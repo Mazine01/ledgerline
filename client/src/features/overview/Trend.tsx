@@ -1,10 +1,6 @@
 import type { Currency, TrendPoint } from '@ledgerline/shared';
 import { money, monthLabel } from '../../lib/format';
 
-/**
- * Six months side by side, income and spending on one shared scale (comparing
- * them is the point here), and what was left over written under each month.
- */
 export function Trend({ points, currency, selected, onSelect }: { points: TrendPoint[]; currency: Currency; selected: string; onSelect: (m: string) => void }) {
   const max = Math.max(...points.flatMap((p) => [p.incomeCents, p.expenseCents]), 1);
 

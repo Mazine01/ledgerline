@@ -31,7 +31,6 @@ export function OverviewPage() {
         <MonthPicker month={month} onChange={setMonth} />
       </div>
 
-      {/* The answer first: what's left. */}
       <section aria-label="Month totals" className="mt-6 grid gap-6 rounded-panel bg-[rgb(20_33_43)] p-6 text-white sm:grid-cols-[1.4fr_1fr_1fr] sm:items-end sm:p-8 dark:bg-surface dark:ring-1 dark:ring-rule">
         <div>
           <p className="text-sm text-white/65 dark:text-ink-muted">
@@ -90,7 +89,6 @@ function Total({ label, value, currency, tone }: { label: string; value?: number
   );
 }
 
-/** Spending per category, ranked, with budget status inline where a budget exists. */
 function WhereItWent({ summary, currency }: { summary: MonthSummary; currency: Currency }) {
   const rows = summary.byCategory;
   const max = Math.max(...rows.map((r) => Math.max(r.expenseCents, r.budgetCents ?? 0)), 1);

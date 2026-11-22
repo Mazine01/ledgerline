@@ -3,6 +3,11 @@ import type { Config } from 'tailwindcss';
 const token = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
 
 export default {
+  // `dark:` follows the same rule as the tokens: an explicit choice wins, otherwise the system setting.
+  darkMode: [
+    'variant',
+    ["&:is([data-theme='dark'] *)", "@media (prefers-color-scheme: dark) { &:is(:root:not([data-theme='light']):not([data-theme='dark']) *) }"],
+  ],
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {

@@ -9,12 +9,6 @@ const PAD_TOP = 18;
 const PAD_BOTTOM = 18;
 const HALF = MID - PAD_TOP;
 
-/**
- * The month as one ribbon: each day's money in rises above the line, money out
- * hangs below it. The two halves have their own scales (a salary day would
- * otherwise flatten every coffee), and each half names its largest day so the
- * scale is never hidden.
- */
 export function CashFlowRibbon({ summary, currency }: { summary: MonthSummary; currency: Currency }) {
   const [active, setActive] = useState<number | null>(null);
   const days = summary.daily;
@@ -25,7 +19,6 @@ export function CashFlowRibbon({ summary, currency }: { summary: MonthSummary; c
   const maxOut = Math.max(...days.map((d) => d.expenseCents), 1);
   const todayDay = summary.month === thisMonth() ? new Date().getUTCDate() : null;
 
-  // Running net up to the hovered day, for the readout.
   const runningNet = (day: number) =>
     days.slice(0, day).reduce((acc, d) => acc + d.incomeCents - d.expenseCents, 0);
 
@@ -38,7 +31,6 @@ export function CashFlowRibbon({ summary, currency }: { summary: MonthSummary; c
     <figure className="rounded-panel border border-rule bg-surface p-5 sm:p-6">
       <figcaption className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
         <h2 className="font-semibold">Cash flow, day by day</h2>
-        {/* The readout follows the pointer; at rest it shows today (or the month's last day). */}
         <p className="tabular text-sm text-ink-muted" aria-live="polite">
           <span className="font-semibold text-ink">{dateText}</span>
           <span className="mx-2 text-rule-strong">|</span>
@@ -54,7 +46,6 @@ export function CashFlowRibbon({ summary, currency }: { summary: MonthSummary; c
         <svg viewBox={`0 0 ${W} ${H}`} className="h-[200px] w-full sm:h-[240px]" preserveAspectRatio="none" role="img"
           aria-label={`Daily money in and out for ${monthLabel(summary.month)}`}
           onMouseLeave={() => setActive(null)}>
-          {/* Week bands make it easy to find a date. */}
           {days.map((_, i) =>
             Math.floor(i / 7) % 2 === 1 ? <rect key={`w${i}`} x={i * slot} y={0} width={slot} height={H} className="fill-sunken/60" /> : null,
           )}
@@ -81,7 +72,6 @@ export function CashFlowRibbon({ summary, currency }: { summary: MonthSummary; c
             );
           })}
         </svg>
-        {/* Scale labels sit outside the stretched SVG so text never distorts. */}
         <span className="tabular pointer-events-none absolute left-1 top-0 rounded bg-surface/85 px-1 text-[11px] text-income">
           max {money(maxIn === 1 ? 0 : maxIn, currency, { compact: true })}
         </span>

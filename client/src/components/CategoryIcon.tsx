@@ -42,7 +42,6 @@ export const ICONS: Record<IconName, LucideIcon> = {
   circle: Circle,
 };
 
-/** A category's icon on a tint of its own colour. */
 export function CategoryIcon({ icon, color, size = 36 }: { icon: IconName; color: string; size?: number }) {
   const Icon = ICONS[icon] ?? Circle;
   return (

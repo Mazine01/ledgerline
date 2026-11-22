@@ -1,4 +1,3 @@
-/** Money in above the line, money out below it: the product in one mark. */
 export function Logo({ className = '' }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>

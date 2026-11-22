@@ -3,7 +3,6 @@ import { dayLabel, money } from '../lib/format';
 import { CategoryIcon } from './CategoryIcon';
 import { useTransactionEditor } from '../features/transactions/TransactionEditor';
 
-/** Transactions grouped under a heading per day, like a bank statement. */
 export function TransactionList({ items, currency }: { items: Transaction[]; currency: Currency }) {
   const open = useTransactionEditor();
   const groups: { date: string; items: Transaction[] }[] = [];

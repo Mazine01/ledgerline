@@ -14,8 +14,6 @@ import type {
 } from '@ledgerline/shared';
 import { api, ApiError } from './api';
 
-// ---------- Auth ----------
-
 export function useMe() {
   return useQuery({
     queryKey: ['me'],
@@ -68,8 +66,6 @@ export function useUpdateProfile() {
   });
 }
 
-// ---------- Reads ----------
-
 export function useSummary(month: string) {
   return useQuery({
     queryKey: ['summary', month],
@@ -108,8 +104,6 @@ export function useBudgets(month: string) {
     queryFn: async () => (await api<{ data: BudgetRow[] }>('/api/budgets', { query: { month } })).data,
   });
 }
-
-// ---------- Writes ----------
 
 /** Any money change can move every total, so refresh everything derived from transactions. */
 function useRefreshMoney() {

@@ -14,7 +14,6 @@ import { useCategories, useDeleteTransaction, useMe, useSaveTransaction, type Tx
 type Open = (opts?: { type?: TxType; transaction?: Transaction }) => void;
 const EditorContext = createContext<Open | null>(null);
 
-/** Opens the add/edit drawer from anywhere: the header button, a list row, an empty state. */
 export function useTransactionEditor() {
   const open = useContext(EditorContext);
   if (!open) throw new Error('useTransactionEditor needs <TransactionEditorProvider>');
@@ -141,7 +140,6 @@ function TransactionDrawer({ open, type, transaction, onClose }: { open: boolean
         }
       >
         <form id={FORM_ID} onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
-          {/* Money in or out: the choice that colours everything else. */}
           <fieldset>
             <legend className="sr-only">Type</legend>
             <div className="grid grid-cols-2 gap-1 rounded-control bg-sunken p-1">

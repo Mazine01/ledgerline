@@ -8,6 +8,8 @@ import { TransactionEditorProvider } from '../features/transactions/TransactionE
 import { TransactionsPage } from '../features/transactions/TransactionsPage';
 import { useMe } from '../lib/queries';
 import { AppShell } from './AppShell';
+import { PublicLayout } from './PublicLayout';
+import { LegalPage } from '../features/legal/LegalPage';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { data: me, isLoading, error, refetch } = useMe();
@@ -45,6 +47,9 @@ export function App() {
     <Routes>
       <Route path="/login" element={<AuthPage mode="login" />} />
       <Route path="/register" element={<AuthPage mode="register" />} />
+      <Route path="/privacy" element={<PublicLayout><LegalPage doc="privacy" /></PublicLayout>} />
+      <Route path="/terms" element={<PublicLayout><LegalPage doc="terms" /></PublicLayout>} />
+      <Route path="/cookies" element={<PublicLayout><LegalPage doc="cookies" /></PublicLayout>} />
       <Route path="/" element={page(<OverviewPage />)} />
       <Route path="/transactions" element={page(<TransactionsPage />)} />
       <Route path="/budgets" element={page(<BudgetsPage />)} />

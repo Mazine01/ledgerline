@@ -6,6 +6,7 @@ import { ConfirmDialog, Drawer } from '../../components/ui/Dialogs';
 import { SelectField, TextField } from '../../components/ui/Field';
 import { useToast } from '../../components/ui/Toast';
 import { CategoryIcon, ICONS } from '../../components/CategoryIcon';
+import { ThemeSwitch } from '../../components/ThemeSwitch';
 import { ApiError } from '../../lib/api';
 import { useCategories, useDeleteCategory, useMe, useSaveCategory, useUpdateProfile } from '../../lib/queries';
 
@@ -44,6 +45,14 @@ export function SettingsPage() {
           </SelectField>
           <Button type="submit" loading={update.isPending} className="sm:mb-[22px]">Save name</Button>
         </form>
+      </section>
+
+      <section aria-labelledby="appearance-heading" className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-panel border border-rule bg-surface p-5 sm:p-6">
+        <div>
+          <h2 id="appearance-heading" className="font-semibold">Appearance</h2>
+          <p className="mt-1 text-sm text-ink-muted">Auto matches your device’s light or dark setting.</p>
+        </div>
+        <ThemeSwitch />
       </section>
 
       {(['EXPENSE', 'INCOME'] as const).map((type) => (

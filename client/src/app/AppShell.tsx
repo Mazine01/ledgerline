@@ -4,6 +4,8 @@ import { LayoutDashboard, ListOrdered, LogOut, Plus, Settings, Target } from 'lu
 import { useLogout, useMe } from '../lib/queries';
 import { useTransactionEditor } from '../features/transactions/TransactionEditor';
 import { Logo } from './Logo';
+import { SiteFooter } from '../components/SiteFooter';
+import { ThemeToggle } from '../components/ThemeSwitch';
 
 const NAV = [
   { to: '/', label: 'Overview', icon: LayoutDashboard },
@@ -18,7 +20,6 @@ export function AppShell({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
   const openEditor = useTransactionEditor();
   const { search } = useLocation();
-  // Keep the chosen month when moving between pages.
   const month = new URLSearchParams(search).get('month');
   const withMonth = (to: string) => (month && to !== '/settings' ? `${to}?month=${month}` : to);
 
@@ -28,7 +29,6 @@ export function AppShell({ children }: { children: ReactNode }) {
         Skip to content
       </a>
 
-      {/* Desktop sidebar */}
       <aside className="sticky top-0 hidden h-screen flex-col border-r border-rule bg-surface px-4 py-6 lg:flex">
         <Logo className="px-2" />
         <button
@@ -59,10 +59,11 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="mt-auto border-t border-rule pt-4">
           <p className="truncate px-3 text-sm font-semibold">{me?.name}</p>
           <p className="truncate px-3 text-xs text-ink-muted">{me?.email}</p>
+          <ThemeToggle withLabel className="mt-3 flex h-9 w-full items-center gap-3 rounded-control px-3 text-sm text-ink-muted hover:bg-sunken hover:text-ink" />
           <button
             type="button"
             onClick={() => logout.mutate(undefined, { onSuccess: () => navigate('/login') })}
-            className="mt-3 flex h-9 w-full items-center gap-3 rounded-control px-3 text-sm text-ink-muted hover:bg-sunken hover:text-ink"
+            className="flex h-9 w-full items-center gap-3 rounded-control px-3 text-sm text-ink-muted hover:bg-sunken hover:text-ink"
           >
             <LogOut size={16} aria-hidden="true" />
             Sign out
@@ -70,24 +71,28 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
       </aside>
 
-      {/* Mobile header */}
       <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-rule bg-surface/95 px-4 backdrop-blur lg:hidden">
         <Logo />
-        <button
-          type="button"
-          onClick={() => logout.mutate(undefined, { onSuccess: () => navigate('/login') })}
-          aria-label="Sign out"
-          className="grid h-10 w-10 place-items-center rounded-control text-ink-muted hover:bg-sunken"
-        >
-          <LogOut size={18} />
-        </button>
+        <div className="flex items-center">
+          <ThemeToggle className="grid h-10 w-10 place-items-center rounded-control text-ink-muted hover:bg-sunken" />
+          <button
+            type="button"
+            onClick={() => logout.mutate(undefined, { onSuccess: () => navigate('/login') })}
+            aria-label="Sign out"
+            className="grid h-10 w-10 place-items-center rounded-control text-ink-muted hover:bg-sunken"
+          >
+            <LogOut size={18} />
+          </button>
+        </div>
       </header>
 
-      <main id="main" className="mx-auto w-full max-w-[1120px] px-4 pb-28 pt-6 sm:px-8 lg:pb-16 lg:pt-10">
+      <div className="flex min-w-0 flex-col pb-16 lg:min-h-screen lg:pb-0">
+        <main id="main" className="mx-auto w-full max-w-[1120px] flex-1 px-4 pb-12 pt-6 sm:px-8 lg:pt-10">
         {children}
-      </main>
+        </main>
+        <SiteFooter />
+      </div>
 
-      {/* Mobile bottom nav with the add button in the middle of reach */}
       <nav aria-label="Main" className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-rule bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
         {NAV.slice(0, 2).map((item) => (
           <MobileLink key={item.to} {...item} to={withMonth(item.to)} end={item.to === '/'} />

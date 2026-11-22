@@ -1,9 +1,4 @@
-/*
- * Ledgerline design tokens.
- * Idea: a clean bank statement that explains itself. Ink-navy text on slate mist,
- * and colour only where it carries meaning: teal is money in, red is money out,
- * amber is a budget getting close.
- */
+/* Ledgerline design tokens. Light theme by default; dark values below. */
 :root {
   --paper: 243 245 247;        /* #F3F5F7 slate mist */
   --surface: 255 255 255;
@@ -29,8 +24,36 @@
   color-scheme: light;
 }
 
+/*
+ * Dark theme. Applies when the person picks Dark, or picks Auto (the default)
+ * and their system is dark. The choice is set on <html data-theme="...">.
+ */
+:root[data-theme='dark'] {
+    --paper: 14 20 26;
+    --surface: 21 29 37;
+    --sunken: 28 38 48;
+    --ink: 228 234 240;
+    --ink-muted: 148 161 174;
+    --rule: 38 50 62;
+    --rule-strong: 62 77 92;
+    --brand: 228 234 240;
+    --brand-ink: 14 20 26;
+    --brand-soft: 33 45 56;
+    --income: 72 201 164;
+    --income-soft: 18 50 42;
+    --expense: 240 112 128;
+    --expense-soft: 60 26 32;
+    --budget: 236 186 92;
+    --budget-ink: 236 186 92;
+    --budget-soft: 58 44 18;
+    --danger: 240 112 128;
+    --danger-soft: 60 26 32;
+    --shadow-panel: 0 1px 0 rgb(var(--rule)), 0 16px 40px -12px rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']):not([data-theme='dark']) {
     --paper: 14 20 26;
     --surface: 21 29 37;
     --sunken: 28 38 48;
